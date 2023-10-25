@@ -37,9 +37,13 @@ const document = gql`
 export const loadPosts = async (
   variables: LoadPostVariables = {},
 ): Promise<StrapiPostAndSettings> => {
-  const data = await request(config.graphqlURL, document, {
-    ...variables,
-  });
+  const data: StrapiPostAndSettings = await request(
+    config.graphqlURL,
+    document,
+    {
+      ...variables,
+    },
+  );
 
   return data;
 };
