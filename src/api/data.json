@@ -1,0 +1,152 @@
+{
+  "data": {
+    "setting": {
+      "data": {
+        "id": "1",
+        "attributes": {
+          "blogName": "RogérioTech",
+          "blogDescription": "Apenas um blog sobre programação...",
+          "logo": {
+            "data": {
+              "id": "7",
+              "attributes": {
+                "name": "logoexample.png",
+                "alternativeText": null,
+                "url": "https://res.cloudinary.com/dl4ukgn78/image/upload/v1695928498/logoexample_1b4c31bd91.png"
+              }
+            }
+          },
+          "menuLinks": [
+            {
+              "id": "1",
+              "link": "#texto",
+              "text": "O texto",
+              "newTab": false
+            },
+            {
+              "id": "2",
+              "link": "#link2",
+              "text": "O Link 2",
+              "newTab": false
+            }
+          ],
+          "footer": "O texto da footer ..."
+        }
+      }
+    },
+    "posts": {
+      "data": [
+        {
+          "createdAt": "2023-09-28",
+          "id": "1",
+          "attributes": {
+            "title": "A Simple Explanation of useEffect()",
+            "slug": "a-simple-explanation-of-use-effect",
+            "cover": {
+              "data": {
+                "id": "4",
+                "attributes": {
+                  "name": "one-year-of-react-native.png",
+                  "alternativeText": null,
+                  "url": "https://res.cloudinary.com/dl4ukgn78/image/upload/v1695762301/one_year_of_react_native_33d2a76aec.png"
+                }
+              }
+            },
+            "excerpt": "But the brevity of hooks comes at a price — they're relatively difficult to understand at the beginning. That's especially true for useEffect() — the hook that manages side-effects in functional React components.",
+            "content": "**1. Side-effects**\nA functional React component uses props and/or state to calculate the output. If the component makes calculations that don't target the output value, then these calculations are named side-effects.\n\nExamples of side-effects are fetch requests, manipulating DOM directly, using timer functions like setTimeout(), and more.\n\nComponent rendering and the side-effect logic are independent. Performing side-effects directly in the body of the component is a mistake, because the body computes the component's output or calls hooks.\n\nHow often the component renders isn't something you can control — if React wants to render the component, you cannot stop it.\n\n```\nfunction Greet({ name }) {\n  const message = `Hello, ${name}!`; // Calculates output\n\n  // Bad!\n  document.title = `Greetings to ${name}`; // Side-effect!\n\n  return <div>{message}</div>;       // Calculates output\n}\n```\n\nHow to decouple rendering from the side-effect? Welcome useEffect() — the hook that runs side-effects independently of rendering.\n\n```\nimport { useEffect } from 'react';\n\nfunction Greet({ name }) {\n  const message = `Hello, ${name}!`;   // Calculates output\n\n  useEffect(() => {\n    // Good!\n    document.title = `Greetings to ${name}`; // Side-effect!\n  }, [name]);\n\n  return <div>{message}</div>;         // Calculates output\n}\n```\n\n**2. useEffect() arguments**\n\nuseEffect() hook accepts 2 arguments:\n\n```\nuseEffect(callback[, dependencies]);\n```\n\n\n. callback is a function that contains the side-effect logic. callback is executed right after the DOM update.\n. dependencies is an optional array of dependencies. useEffect() executes callback only if the dependencies have changed between renderings.\n\n_Put your side-effect logic into the callback function, then use the dependencies argument to control when you want the side-effect to run. That's the sole purpose of useEffect()._\n\nFor example, in the previous code snippet you saw the useEffect() in action:\n\n\n\n```\nuseEffect(() => {\n  document.title = `Greetings to ${name}`;\n}, [name]);\n```\n\n_The document title update_ is the side-effect because it doesn't directly calculate the component output. That's why the document title update is placed in a callback and supplied to useEffect().\n\nAlso, you don't want the document title update to run every time Greet component renders. You only want it to happen when the name prop changes — that's the reason you supplied name as a dependency to useEffect(callback, [name]).\n\n**\n**2.1 Dependencies argument****\ndependencies argument of useEffect(callback, dependencies) lets you control when the side-effect runs. If dependencies are:\n\nA) Not provided: the side-effect runs after every rendering.\n\n\n```\nimport { useEffect } from 'react';\n\nfunction MyComponent() {\n  useEffect(() => {\n    // Runs after EVERY rendering\n  });  \n}\n```\n\nB) An empty array []: the side-effect runs once after the initial rendering.\n\n\n```\nimport { useEffect } from 'react';\n\nfunction MyComponent() {\n  useEffect(() => {\n    // Runs ONCE after initial rendering\n  }, []);\n}\n```\n\nC) Has props or state values [prop1, prop2, ..., state1, state2]: the side-effect runs once after initial rendering and then only when any dependency value changes.\n\n\n```\nimport { useEffect, useState } from 'react';\n\nfunction MyComponent({ prop }) {\n  const [state, setState] = useState('');\n  useEffect(() => {\n    // Runs ONCE after initial rendering\n    // and after every rendering ONLY IF `prop` or `state` changes\n  }, [prop, state]);\n}\n```\n\n**3. useEffect() in practice**\n**3.1 Fetching data**\n\nuseEffect() can perform data fetching side-effect.\n\nThe following component FetchEmployees fetches the employees list over the network:\n\n\n```\nimport { useEffect, useState } from 'react';\n\nfunction FetchEmployees() {\n  const [employees, setEmployees] = useState([]);\n\n  useEffect(() => {\n    async function fetchEmployees() {\n      const response = await fetch('/employees');\n      const fetchedEmployees = await response.json();\n      setEmployees(fetchedEmployees);\n    }\n\n    fetchEmployees();\n  }, []);\n\n  return (\n    <div>\n      {employees.map(name => <div>{name}</div>)}\n    </div>\n  );\n}\n```\n\nuseEffect() starts a fetch request by calling fetchEmployees() async function after the initial rendering.\n\nWhen the request completes, setEmployees(fetchedEmployees) updates the employees state with the just fetched employees list.\n\n\n**4. Conclusion**\n\nuseEffect(callback, dependencies) is the hook that manages the side-effects in functional components. callback argument is a function where to put the side-effect logic. dependencies is a list of dependencies of your side-effect: being props or state values.\n\nuseEffect(callback, dependencies) invokes the callback after initial rendering (mounting), and on later renderings, if any value inside dependencies has changed.\n\nThe next step to mastering useEffect() is to understand and avoid the infinite loop pitfall.\n\n_Still have questions about useEffect() hook?_ Write a comment below!\n\n\n",
+            "tags": {
+              "data": [
+                {
+                  "id": "2",
+                  "attributes": {
+                    "displayName": "useEffect",
+                    "slug": "use-effect"
+                  }
+                }
+              ]
+            },
+            "categories": {
+              "data": [
+                {
+                  "id": "2",
+                  "attributes": {
+                    "displayName": "React",
+                    "slug": "react"
+                  }
+                }
+              ]
+            },
+            "author": {
+              "data": {
+                "id": "1",
+                "attributes": {
+                  "displayName": "Gabriel Labritz",
+                  "slug": "gabriel-labritz"
+                }
+              }
+            },
+            "allowComments": true
+          }
+        },
+        {
+          "id": "2",
+          "attributes": {
+            "title": "Record Type in TypeScript: A Quick Intro",
+            "slug": "record-type-in-type-script-a-quick-intro",
+            "cover": {
+              "data": {
+                "id": "6",
+                "attributes": {
+                  "name": "typescript.png",
+                  "alternativeText": null,
+                  "url": "https://res.cloudinary.com/dl4ukgn78/image/upload/v1695840203/typescript_707178b8ae.png"
+                }
+              }
+            },
+            "excerpt": "The usual way to define a type of an object in TypeScript is using an object type",
+            "content": "_Record Type in TypeScript: A Quick Intro_\n\nThe usual way to define a type of an object in TypeScript is using an object type:\n\n\n```\ninterface SalaryInterface {\n  annual: number\n  bonus: number\n}\n\nconst salary: SalaryInterface = { annual: 56000, bonus: 1200 } // OK\n```\n\nor an index signature:\n\n\n```\ntype NumericObject = {\n  [key: string]: number\n}\n\nconst salary: NumericObject = { annual: 56000, bonus: 1200 } // OK\n```\n\nThese are good ways to define object types.\n\nBut Record<K, V>, the third approach, has the benefit of being shorter and more readable. Let's see how to use it in your code.\n\n\n**1. Record type**\n\nRecord<K, V> is a generic type that represents an object type which keys are K and values are V.\n\nFor example, Record<string, number> is an object type with string keys and number values:\n\n\n```\ntype NumericRecord = Record<string, number>\n\nconst salary: NumericRecord = { annual: 56000, bonus: 1200 } // OK\n```\n\nRecord<string, number> is permissive regarding the object structure, as long as the keys are strings and values are numbers:\n\n\n```\ntype NumericRecord = Record<string, number>\n\nconst salary1: NumericRecord = { annual: 56000 } // OK\nconst salary2: NumericRecord = { monthly: 8000 } // OK\nconst salary3: NumericRecord = { }               // OK\nconst salary4: NumericRecord = { foo: 0, bar: 1, baz: -2 } // OK\n```\n\nBut Record<string, number> throws a type error if the value of a prop is a string:\n\n\n```\ntype NumericRecord = Record<string, number>\n\nconst salary2: NumericRecord = { annual: '56K' } // Type error!\n```\n\nThere are 2 simple rules to remember regarding the allowed types of the keys and values. In Record<K, V>:\n\n- the key type K is restricted to number, string, symbol, including their literals\n- but there is no restriction on the value type V\n\nLet's see some valid record types:\n\n\n```\ntype T1 = Record<string, string>           // OK\ntype T2 = Record<number, number>           // OK\ntype T3 = Record<string, () => void>       // OK\ntype T4 = Record<number | 'key1', boolean> // OK\ntype T5 = Record<'key1' | 'key2', boolean> // OK\n\ntype T6 = Record<string, Record<string, number>> // OK\ntype T7 = Record<string, { payment: number }>    // OK\n```\n\nTypes like boolean, object, Function, etc. are not accepted as keys:\n\n\n```\ntype T1 = Record<boolean, number> // Type error!\ntype T2 = Record<object, number>  // Type error!\n```\n\n**2. Record with union key**\nAs seen above, Record<string, number> permits any key names in the object. But quite often you need to annotate objects with a fixed set of keys.\n\nThe record type accepts a union type as a key, which is useful to fixate the keys.\n\nA union of string literals is a common way to define the key type:\n\n\n```\ntype Keys = 'key1' | 'key2' | 'keyN'\n```\n\nFor example, Record<'annual' | 'bonus', number> represents an object which can have only annual and bonus keys:\n\n\n```\ntype Salary = Record<'annual' | 'bonus', number>\n\nconst salary1: Salary = { annual: 56000, bonus: 1200 } // OK\n```\n\nUsing less than necessary or keys than aren't in the union is prohibited:\n\n\n```\ntype Salary = Record<'annual' | 'bonus', number>\n\nconst salary1: Salary = { annual: 56000 } // Type error!\nconst salary2: Salary = { bonus: 1200 }   // Type error!\nconst salary3: Salary = { }               // Type error!\nconst salary4: Salary = { monthly: 8000 } // Type error!\n```\n\nThe record type with union keys is equivalent to the regular object type. The record type has the benefit of not repeating the value type (like the regular object does):\n\n\n```\ntype Salary = Record<'annual' | 'bonus', number>\n// is equivalent to\ntype SalaryObj = {\n  annual: number\n  bonus: number\n}\n```\n\n**3. Record benefits**\n\nI prefer record type instead of index signature most of the time. Record syntax is shorter and more readable (altought it's also a matter of taste).\n\nFor example, the record parameter is a bit easier to grasp than the index signature parameter:\n\n\n```\nfunction logSalary1(salary: Record<string, number>) {\n  console.log(salary)\n}\n\nfunction logSalary2(salary: { [key: string]: number }) {\n  console.log(salary)\n}\n```\n\nCompared to record type, the index signature doesn't accept literals or a union as key type:\n\n\n```\ntype Salary = {\n  [key: 'annual' | 'bonus']: number // Type error!\n}\n```\n\n**4. Conclusion**\n\nRecord<K, V> is an object type with key type K and value type V.\n\nThe key type K can be only number, string, or symbol, including their literals. On the value type V is no restriction.\n\nTo limit the keys to a specific set, you can use a union of string literals Record<'key1' | 'key2', V> as the key type.\n\nCheck also my post index signatures to learning more about object types.\n\n_How often do you use record type?_",
+            "tags": {
+              "data": [
+                {
+                  "id": "6",
+                  "attributes": {
+                    "displayName": "Union Types",
+                    "slug": "union-types"
+                  }
+                },
+                {
+                  "id": "7",
+                  "attributes": {
+                    "displayName": "Record Type",
+                    "slug": "record-type"
+                  }
+                }
+              ]
+            },
+            "categories": {
+              "data": [
+                {
+                  "id": "6",
+                  "attributes": {
+                    "displayName": "TypeScript",
+                    "slug": "type-script"
+                  }
+                }
+              ]
+            },
+            "author": {
+              "data": {
+                "id": "2",
+                "attributes": {
+                  "displayName": "Thais Tanaka",
+                  "slug": "thais-tanaka"
+                }
+              }
+            },
+            "allowComments": true
+          }
+        }
+      ]
+    }
+  }
+}

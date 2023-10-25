@@ -1,0 +1,16 @@
+import { PostStrapi } from '../shared-typed/post-strapi';
+
+export const getPostsByCategory = async (
+  categorySlug: string = '',
+): Promise<PostStrapi> => {
+  const clearSlug = categorySlug
+    ? `[categories][slug]=${categorySlug.replace(/[^a-z0-9-_]/gi, '')}`
+    : '';
+
+  const url = `http://localhost:1337/api/posts?filters${clearSlug}&populate=deep`;
+
+  const data = await fetch(url);
+  const json = await data.json();
+
+  return json.data;
+};
