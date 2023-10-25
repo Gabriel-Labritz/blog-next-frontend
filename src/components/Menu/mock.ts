@@ -71,9 +71,13 @@ export default {
   ],
   blogName: 'Gabriel Labritz',
   logo: {
-    id: '7',
-    name: 'logoexample.png',
-    alternativeText: null,
-    url: 'https://res.cloudinary.com/dl4ukgn78/image/upload/v1695928498/logoexample_1b4c31bd91.png',
+    data: {
+      attributes: {
+        id: '7',
+        name: 'logoexample.png',
+        alternativeText: null,
+        url: 'https://res.cloudinary.com/dl4ukgn78/image/upload/v1695928498/logoexample_1b4c31bd91.png',
+      },
+    },
   },
 } as MenuProps;

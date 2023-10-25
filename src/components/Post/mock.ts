@@ -4,8 +4,13 @@ export default {
   title: 'A Simple Explanation of useEffect()',
   excerpt:
     'But the brevity of hooks comes at a price — theyre relatively difficult to understand at the beginning. That especially true for useEffect() — the hook that manages side-effects in functional React components.',
-  cover:
-    'https://res.cloudinary.com/dl4ukgn78/image/upload/v1695762301/one_year_of_react_native_33d2a76aec.png',
+  cover: {
+    id: '1',
+    name: '',
+    alternativeText: 'imagem cover',
+    url: 'https://res.cloudinary.com/dl4ukgn78/image/upload/v1695762301/one_year_of_react_native_33d2a76aec.png',
+  },
+
   createdAt: '2023-09-31',
   author: {
     id: '1',
@@ -24,7 +29,7 @@ export default {
       slug: 'java-script',
     },
   ],
-  contentPost: `
+  content: `
   <p>Nostro <strong>definitiones</strong> (<i>React</i>) sed cu - <u>Otávio Miranda</u>. Sea <code>useEffect</code>, useState dicat fabulas <a href="https://gist.github.com/luizomf/e7cf0c3d172801225cce694681ecb0ad">consetetur</a> no, odio deseruisse assueverit mei eu, vis probo nonumes molestie id. Ipsum movet liberavisse an mea, diceret vituperata ne his, delenit apeirian quo ea. Imperdiet percipitur te eos. Per ludus aliquam cu. <a href="https://gist.github.com/luizomf/e7cf0c3d172801225cce694681ecb0ad">Eos ex tincidunt necessitatibus, timeam theophrastus mel cu</a>. La.</p>
   <h1>Tincidunt necessitatibus, timeam theophrastus mel cu</h1>
   <h2>Tincidunt necessitatibus, timeam theophrastus mel cu</h2>
